@@ -1,7 +1,9 @@
 services:
   web:
     # TODO(step-5a): build the image from the local Dockerfile and expose port 3000.
-      build: .
+      build:
+        context: ./app
+        dockerfile: ../Dockerfile
       ports:
         - "3000:3000"
 
@@ -29,6 +31,7 @@ services:
         volumes:
           - pgdata:/var/lib/postgresql/data
     #       there might be something here ?
+          - ./app/db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
 
     # TODO(step-5f): set Postgres env vars so the DB and user are created on startup.
         environment:
